@@ -59,4 +59,9 @@ lvgl.wasm
 
 # CMake output
 build
+cmbuild
+
+# IDE
+.idea
 .vscode
+.vs

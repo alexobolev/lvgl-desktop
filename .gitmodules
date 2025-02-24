@@ -6,3 +6,6 @@
 	path = lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git
 	branch = master
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/libsdl-org/SDL
