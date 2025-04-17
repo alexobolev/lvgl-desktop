@@ -6,10 +6,10 @@
 1. `cd <emsdk-path>`
 1. `git pull`
 1. `./emsdk install latest`
+1. To make CMake Presets work, add the cloned directory to `KURAGA_EMSDK_PATH` variable. Make sure it is not added to the admin account, unless of course you are building from under admin.
 
 Add the clone directory to PATH for further convenience.
 
----
 
 ## Build this project
 
@@ -23,7 +23,19 @@ Add the clone directory to PATH for further convenience.
 
 A file `cmbuild/index.html` will be generated. You can open it in your browser.
 
----
+
+### Making this work with VS Code under Windows 10/11
+
+* You'll need the basic C/C++ extensions: `C/C++` and `CMake Tools`, both by Microsoft.
+* Open the folder in VS Code *at least once* from under a terminal where you have activated emscripten variables (see above).
+* Configure `default` CMake preset using the CMake extension tab.
+  * Be prepared to wait an eternity and a half until SDL2 checks all the symbols it wants.
+  * The first build will take a while as it builds SDL2, LVGL and dependencies.
+  * You can also just build things here, using `default` build preset.
+* Once things have been configured, CMake's build tree contains absolute paths to all the emscripten tools you need, and VS Code should be able to pick things up from there.
+* Now you can open the folder in VS Code however you want, and it should just work :tm:.
+
+Do not use terminal to build the project while in VS Code.
 
 ### Build options (environment variables)
 
