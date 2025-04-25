@@ -1,6 +1,15 @@
 # Emscripten port
 
-## Install Emscripten SDK
+## Common prerequisites
+
+### Install Visual Studio 2022
+
+* Full desktop installation will do: https://visualstudio.microsoft.com/vs/community/,
+* or you may already have Build Tools installed.
+
+Whichever installation you have, make sure that the common C++ development packages are available, including `C++ CMake tools for Windows`.
+
+### Install Emscripten SDK
 
 1. `git clone https://github.com/emscripten-core/emsdk.git <emsdk-path>`
 1. `cd <emsdk-path>`
@@ -13,29 +22,61 @@ Add the clone directory to PATH for further convenience.
 
 ## Build this project
 
-1. `emsdk activate latest`
-1. `<emsdk-path>/emsdk_env.bat`
-1. `cd <lgvl-desktop-path>`
-1. `mkdir cmbuild`
-1. `cd cmbuild`
-1. `emcmake cmake -G Ninja ..`
-1. `cmake --build .`
+Clone this repository **with submodules**.
 
-A file `cmbuild/index.html` will be generated. You can open it in your browser.
+```
+> git clone --recurse-submodules <repo-url>
+```
 
+Whether you're building from a terminal or Visual Studio, you will need to activate the emscripten environment:
 
-### Making this work with VS Code under Windows 10/11
+```
+> emsdk activate latest
+> <emsdk-path>/emsdk_env.bat
+```
 
-* You'll need the basic C/C++ extensions: `C/C++` and `CMake Tools`, both by Microsoft.
-* Open the folder in VS Code *at least once* from under a terminal where you have activated emscripten variables (see above).
-* Configure `default` CMake preset using the CMake extension tab.
-  * Be prepared to wait an eternity and a half until SDL2 checks all the symbols it wants.
-  * The first build will take a while as it builds SDL2, LVGL and dependencies.
-  * You can also just build things here, using `default` build preset.
-* Once things have been configured, CMake's build tree contains absolute paths to all the emscripten tools you need, and VS Code should be able to pick things up from there.
-* Now you can open the folder in VS Code however you want, and it should just work :tm:.
+### Use case: building using terminal only
+
+```
+cd <lgvl-desktop-path>
+mkdir cmbuild
+cd cmbuild
+emcmake cmake -G Ninja ..
+cmake --build .
+```
+
+### Use case: Visual Studio Code
+
+Ensure you have the following prerequisites fulfilled:
+
+* Visual Studio 2022 (or Build Tools) is installed.
+  * This specifically requires `C++ CMake tools for Windows` package.
+* Visual Studio Code is installed and available in `PATH`.
+  * This should happen automatically if you have a system-wide installation.
+  * If your Visual Studio Code is installed under `AppData`:
+    * manually add the directory with `code.cmd` to `PATH`,
+    * make sure to restart your terminal.
+* Basic C/C++ extensions are installed: `C/C++` and `CMake Tools`, both by Microsoft. Throw in some debugger for good measure, too.
+
+Once you have checked the prerequisites:
+
+1. Open `Developer PowerShell for VS 2022` (it will provide `cmake`).
+1. Activate emscripted using the two commands above.
+1. Open the repository in VS Code *at least once* from under the terminal (`code .`).
+1. Configure `default` CMake preset using the CMake extension tab.
+   * Be prepared to wait an eternity and a half until SDL2 checks all the symbols it wants.
+   * The first build will take a while as it builds SDL2, LVGL and dependencies.
+   * You can also just build things here, using `default` build preset.
+1. Once things have been configured, CMake's build tree contains absolute paths to all the emscripten tools you need, and VS Code should be able to pick things up from there.
+   * Now you can open the folder in VS Code however you want, and it should just work :tm:.
 
 Do not use terminal to build the project while in VS Code.
+
+### Output
+
+Whichever way you've chosen, a file `cmbuild/index.html` will be generated. You should be able to open it in your browser.
+
+## Original notes from upstream
 
 ### Build options (environment variables)
 
